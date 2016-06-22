@@ -84,20 +84,18 @@
             <hr>
             <div class="form-group">
               <label for="selCCAA">Seleccione Comunidad Autónoma:</label>
-              <select class="form-control" id="selCCAA">
+              <select class="selectpicker form-control" id="selCCAA" data-selector="ccaa">
               </select>
             </div>
             <div class="form-group">
               <label for="selProv">Seleccione Provincia:</label>
-              <select class="form-control" id="selProv">
-                <option value="Málaga">Málaga</option>
-                <option value="Sevilla">Sevilla</option>
+              <select class="selectpicker form-control" id="selProv" data-selector="prov">
+
               </select>
             </div><div class="form-group">
               <label for="selMuni">Seleccione Municipio:</label>
-              <select class="form-control" id="selCCAA">
-                <option value="Nerja">Nerja</option>
-                <option value="Marbella">Marbella</option>
+              <select class="selectpicker form-control" id="selMuni" data-selector="muni">
+
               </select>
             </div>
           </div>
@@ -114,7 +112,16 @@
 
 
 <script id="theTmpl" type="text/x-jsrender">
-  <option value={{:attributes.Codigo}}>{{:attributes.Texto}}</option>
+    {{if attributes.Codigo && attributes.Texto}}
+      <option value={{:attributes.Codigo}}>{{:attributes.Texto}}</option>    
+    {{/if}}
+    {{if attributes.Cod_CCAA && attributes.Codigo && attributes.Texto}}
+      <option value={{:attributes.Codigo}}>{{:attributes.Texto}}</option>    
+    {{/if}}
+    {{if attributes.NOMBRE}}
+      <option value={{:attributes.NOMBRE}}>{{:attributes.NOMBRE}}</option>    
+    {{/if}}
+    
 </script>
 
 <script>
@@ -138,36 +145,56 @@ require([
 
 
   var ccaaUrl = "//services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/ComunidadesAutonomasWGS1984MercatorFuenteINE/FeatureServer/0";
-  var provUrl = "//services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/ProvinciasWGS1984MercatoFuenteINE/FeatureServer/0";
-  var muniUrl = "//services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/Municipios/FeatureServer/0";
+  var provUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/Provincias_geoporra/FeatureServer/0";
+  var muniUrl = "//services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/muni/FeatureServer/0";
   
   var queryCitiesTask = new QueryTask({
     url: ccaaUrl 
   });
 
-  var query = new Query();
-  query.where ="1=1";
-  query.returnGeometry=true;
-  query.outFields = ["Texto", "Codigo"];
-  var queryTask = new QueryTask(ccaaUrl);
-  queryTask.execute(query).then(function(result){
-    console.log(result.features);
-    var ccaaData = result.features;
-
-    var template = $.templates("#theTmpl");
-
-    var htmlOutput = template.render(ccaaData);
-
-    $("#selCCAA").html(htmlOutput);
-
-  });
-
+  CodesQuery("1=1",["Texto", "Codigo"],ccaaUrl);
 
   //Query cuando cambie el select consulta para que me pinte los select de las provincias
   $('.selectpicker').on('change', function(){
     var selected = $(this).find("option:selected").val();
-    alert(selected);
+    var targetOption = $(this).data("selector");
+    var where;
+    if (targetOption === "ccaa") {
+      where = "Cod_CCAA = "+ selected;
+      CodesQuery(where,["Texto", "Codigo","Cod_CCAA"],provUrl);  
+    }
+    else if (targetOption === "prov") {
+      //**********
+      //CUANDO SE CREE LA COLUMNA 
+      //
+      where = "COD_PROV = "+ selected;
+      CodesQuery(where,["NOMBRE"],muniUrl);  
+    }
+    // query.where ="Cod_CCAA = "+ selected;
   });
+
+  function CodesQuery(where,outFieldsArray,urlService){
+    var query = new Query();
+    query.where =where;
+    query.outFields = outFieldsArray;
+    var queryTask = new QueryTask(urlService);
+    queryTask.execute(query).then(function(result){
+      console.log(result.features);
+      var ccaaData = result.features;
+      var template = $.templates("#theTmpl");
+      var htmlOutput = template.render(ccaaData);
+      if (urlService === ccaaUrl) {
+       $("#selCCAA").html(htmlOutput);
+      }
+      else if (urlService === provUrl) {
+       $("#selProv").html(htmlOutput);
+      }
+      else if (urlService === muniUrl) {
+       $("#selMuni").html(htmlOutput);
+      }
+      
+    });
+  }
 
 
 });
