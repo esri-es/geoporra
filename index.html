@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Get started with MapView - Create a 2D map</title>
+<title>GeoPorra</title>
 <style>
   html, body, #viewDiv {
     padding: 0;
@@ -28,6 +28,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
 
+  <script src="http://geodevelopers.org/assets/js/jsrender.js"></script>
 
 <!-- ************************ ArcGIS Libraries ************************ -->
 
@@ -49,23 +50,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <!-- **************************************** -->
-<script>
-require([
-  "esri/Map",
-  "esri/views/MapView",
-  "dojo/domReady!"
-], function(Map, MapView){
-  var map = new Map({
-    basemap: "gray"
-  });
-  var view = new MapView({
-    container: "viewDiv",
-    map: map,
-    zoom: 6,
-    center: [-3,40] 
-  });
-});
-</script>
+
+
+
 </head>
 <body>
   <div id="modalDiv">
@@ -98,8 +85,6 @@ require([
             <div class="form-group">
               <label for="selCCAA">Seleccione Comunidad Autónoma:</label>
               <select class="form-control" id="selCCAA">
-                <option value="Madrid">Madrid</option>
-                <option value="Andalucía">Andalucía</option>
               </select>
             </div>
             <div class="form-group">
@@ -126,5 +111,57 @@ require([
     </div>
   </div>
   <div id="viewDiv"></div>
+
+
+<script id="theTmpl" type="text/x-jsrender">
+  <option value={{:attributes.Codigo}}>{{:attributes.Texto}}</option>
+</script>
+
+<script>
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/tasks/QueryTask",
+  "esri/tasks/support/Query",
+  "dojo/domReady!"
+], function(Map, MapView,QueryTask,Query){
+  var map = new Map({
+    basemap: "gray"
+  });
+  var view = new MapView({
+    container: "viewDiv",
+    map: map,
+    zoom: 6,
+    center: [-3,40] 
+  });
+
+
+
+  var ccaaUrl = "http://services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/ComunidadesAutonomasWGS1984MercatorFuenteINE/FeatureServer/0";
+  
+  var queryCitiesTask = new QueryTask({
+    url: ccaaUrl 
+  });
+
+  var query = new Query();
+  query.where ="1=1";
+  query.returnGeometry=true;
+  query.outFields = ["Texto", "Codigo"];
+  var queryTask = new QueryTask(ccaaUrl);
+  queryTask.execute(query).then(function(result){
+    console.log(result.features);
+    var ccaaData = result.features;
+
+    var template = $.templates("#theTmpl");
+
+    var htmlOutput = template.render(ccaaData);
+
+    $("#selCCAA").html(htmlOutput);
+
+  });
+
+
+});
+</script>
 </body>
 </html>
