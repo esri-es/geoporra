@@ -162,6 +162,13 @@ require([
       canarias_view.container.classList.remove("hide");
     }
   });  
+  peninsula_view2.watch("zoom", function(value, oldValue) {
+    if(value <= 5){
+      canarias_view2.container.classList.add("hide");
+    }else{
+      canarias_view2.container.classList.remove("hide");
+    }
+  });  
  
 
 });
