@@ -14,7 +14,8 @@
     position: fixed;
   
     margin-top: 0;
-  }
+/*    float: left;
+*/  }
   #viewDivCanarias {
     position: absolute;
     width: 350px;
@@ -118,8 +119,9 @@
 require([
   "esri/Map",
   "esri/views/MapView",
+  "esri/layers/FeatureLayer",
   "dojo/domReady!"
-], function(Map, MapView){
+], function(Map, MapView, FeatureLayer){
 
   var map = new Map({
     basemap: "dark-gray"
@@ -139,7 +141,7 @@ require([
   });
 
   var map2 = new Map({
-    basemap: "dark-gray"
+    basemap: "dark-gray-vector"
   });
   var peninsula_view2 = new MapView({
     container: "viewDivRight",
@@ -155,21 +157,58 @@ require([
     zoom: 5,
   });
 
+  
+
+  var layer_comunidades = new FeatureLayer("https://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/2", {
+    mode: FeatureLayer.MODE_SNAPSHOT 
+  });
+  var layer_provincias = new FeatureLayer("https://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/4", {
+    mode: FeatureLayer.MODE_SNAPSHOT 
+  });
+  var layer_municipios = new FeatureLayer("https://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/3", {
+    mode: FeatureLayer.MODE_SNAPSHOT 
+  });
+  //layer_comunidades.MODE_SNAPSHOT;
+  map.addMany([layer_comunidades, layer_provincias, layer_municipios]);
+  map2.addMany([layer_comunidades, layer_provincias, layer_municipios]);
+  debugger
+
+  layer_municipios.visible = false;
+  layer_provincias.visible = false;
+
   peninsula_view.watch("zoom", function(value, oldValue) {
     if(value <= 5){
       canarias_view.container.classList.add("hide");
+      layer_comunidades.visible = true;
+      layer_provincias.visible = false;
+      layer_municipios.visible = false;
+     }
+    if(value <= 7){
+      layer_comunidades.visible = false;
+      layer_provincias.visible = true;
+      layer_municipios.visible = false;
     }else{
-      canarias_view.container.classList.remove("hide");
+      layer_comunidades.visible = false;
+      layer_provincias.visible = false;
+      layer_municipios.visible = true;
     }
   });  
+
   peninsula_view2.watch("zoom", function(value, oldValue) {
     if(value <= 5){
       canarias_view2.container.classList.add("hide");
     }else{
       canarias_view2.container.classList.remove("hide");
     }
-  });  
+  }); 
  
+  // map.on("zoom-end", function() {
+  //   var aea = map.getZoom();
+  //   if (aea == 5) {
+  //     layer_municipios.hide();
+  //   } 
+  //   console.log(aea);
+  // });
 
 });
 </script>
