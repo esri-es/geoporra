@@ -24,30 +24,30 @@
 
 </style>
 
-  <link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
+<link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
 
-  <script src="assets/js/jsrender.js"></script>
+<script src="assets/js/jsrender.js"></script>
 
 <!-- ************************ ArcGIS Libraries ************************ -->
 
-  <link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
-  <script src="//js.arcgis.com/4.0/"></script>
+<link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
+<script src="//js.arcgis.com/4.0/"></script>
 
 <!-- ************************************************ -->
 
 
 <!-- ***********BOOTSTRAP LIBRARIES******************* -->
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <!-- **************************************** -->
 
@@ -71,16 +71,40 @@
           </div>
           <div class="modal-body">
             <h4>¿Quien quieres que gane?</h4>
-            <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
-            <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
-            <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
-            <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
+            <label>
+              <input type="radio" name="wantToWin" value="pp" />
+              <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
+            </label>
+            <label>
+              <input type="radio" name="wantToWin" value="psoe" />
+              <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
+            </label>
+            <label>
+              <input type="radio" name="wantToWin" value="podemos" />
+              <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
+            </label>
+            <label>
+              <input type="radio" name="wantToWin" value="ciudadanos" />
+              <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
+            </label>
             <hr>
             <h4>¿Quien crees que va a ganar?</h4>
-            <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
-            <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
-            <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
-            <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
+            <label>
+              <input type="radio" name="thinkToWin" value="pp" />
+              <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
+            </label>
+            <label>
+              <input type="radio" name="thinkToWin" value="psoe" />
+              <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
+            </label>
+            <label>
+              <input type="radio" name="thinkToWin" value="podemos" />
+              <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
+            </label>
+            <label>
+              <input type="radio" name="thinkToWin" value="ciudadanos" />
+              <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
+            </label>
             <hr>
             <div class="form-group">
               <label for="selCCAA">Seleccione Comunidad Autónoma:</label>
@@ -100,7 +124,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-default">Enviar</button>
+            <button type="submit" class="btn btn-default" id="sendBtn" >Enviar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
@@ -112,8 +136,8 @@
 
 
 <script id="theTmpl" type="text/x-jsrender">
-    {{if attributes.Codigo && attributes.Texto}}
-      <option value={{:attributes.Codigo}}>{{:attributes.Texto}}</option>    
+    {{if attributes.Nombre && attributes.Cod_CCAA}}
+      <option value={{:attributes.Cod_CCAA}}>{{:attributes.Nombre}}</option>    
     {{/if}}
     {{if attributes.Cod_CCAA && attributes.Codigo && attributes.Texto}}
       <option value={{:attributes.Codigo}}>{{:attributes.Texto}}</option>    
@@ -125,79 +149,90 @@
 </script>
 
 <script>
-require([
-  "esri/Map",
-  "esri/views/MapView",
-  "esri/tasks/QueryTask",
-  "esri/tasks/support/Query",
-  "dojo/domReady!"
-], function(Map, MapView,QueryTask,Query){
-  var map = new Map({
-    basemap: "gray"
-  });
-  var view = new MapView({
-    container: "viewDiv",
-    map: map,
-    zoom: 6,
-    center: [-3,40] 
-  });
-
-
-
-  var ccaaUrl = "//services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/ComunidadesAutonomasWGS1984MercatorFuenteINE/FeatureServer/0";
-  var provUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/Provincias_geoporra/FeatureServer/0";
-  var muniUrl = "//services1.arcgis.com/nCKYwcSONQTkPA4K/arcgis/rest/services/muni/FeatureServer/0";
-  
-  var queryCitiesTask = new QueryTask({
-    url: ccaaUrl 
-  });
-
-  CodesQuery("1=1",["Texto", "Codigo"],ccaaUrl);
-
-  //Query cuando cambie el select consulta para que me pinte los select de las provincias
-  $('.selectpicker').on('change', function(){
-    var selected = $(this).find("option:selected").val();
-    var targetOption = $(this).data("selector");
-    var where;
-    if (targetOption === "ccaa") {
-      where = "Cod_CCAA = "+ selected;
-      CodesQuery(where,["Texto", "Codigo","Cod_CCAA"],provUrl);  
-    }
-    else if (targetOption === "prov") {
-      //**********
-      //CUANDO SE CREE LA COLUMNA 
-      //
-      where = "COD_PROV = "+ selected;
-      CodesQuery(where,["NOMBRE"],muniUrl);  
-    }
-    // query.where ="Cod_CCAA = "+ selected;
-  });
-
-  function CodesQuery(where,outFieldsArray,urlService){
-    var query = new Query();
-    query.where =where;
-    query.outFields = outFieldsArray;
-    var queryTask = new QueryTask(urlService);
-    queryTask.execute(query).then(function(result){
-      console.log(result.features);
-      var ccaaData = result.features;
-      var template = $.templates("#theTmpl");
-      var htmlOutput = template.render(ccaaData);
-      if (urlService === ccaaUrl) {
-       $("#selCCAA").html(htmlOutput);
-      }
-      else if (urlService === provUrl) {
-       $("#selProv").html(htmlOutput);
-      }
-      else if (urlService === muniUrl) {
-       $("#selMuni").html(htmlOutput);
-      }
-      
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/tasks/QueryTask",
+    "esri/tasks/support/Query",
+    "dojo/domReady!"
+  ], function(Map, MapView,QueryTask,Query){
+    var map = new Map({
+      basemap: "gray"
     });
-  }
+    var view = new MapView({
+      container: "viewDiv",
+      map: map,
+      zoom: 6,
+      center: [-3,40] 
+    });
 
 
-});
+
+    var ccaaUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/2";
+    var provUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/4";
+    var muniUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/3";
+    
+    //Cast te function once to render CCAA
+    queryAndRenderize("1=1",["Nombre", "Cod_CCAA"],ccaaUrl);
+    //******************
+    //On selected change:
+    $('.selectpicker').change(function() {
+      onChangeFunct(this);
+    });
+
+    //On click submit:
+    $('#sendBtn').click(function(){
+      var codCCAA = $('#selCCAA').val();
+      var codProv = $('#selProv').val();
+      var codMuni = $('#selMuni').val();
+
+
+    });
+
+    function onChangeFunct(esto){
+      var selected = $(esto).find("option:selected").val();
+      var targetOption = $(esto).data("selector");
+      var where;
+      if (targetOption === "ccaa") {
+        where = "Cod_CCAA = "+ selected;
+        queryAndRenderize(where,["Texto", "Codigo","Cod_CCAA"],provUrl);  
+      }
+      else if (targetOption === "prov") {
+        where = "COD_PROV = "+ selected;
+        queryAndRenderize(where,["NOMBRE"],muniUrl);  
+      }
+
+    }
+
+    function queryAndRenderize(where,outFieldsArray,urlService){
+      var query = new Query();
+      query.where =where;
+      query.outFields = outFieldsArray;
+      var queryTask = new QueryTask(urlService);
+      queryTask.execute(query).then(function(result){
+        var ccaaData = result.features;
+        var template = $.templates("#theTmpl");
+        var htmlOutput = template.render(ccaaData);
+        if (urlService === ccaaUrl) {
+         $("#selCCAA").html(htmlOutput);
+        }
+        else if (urlService === provUrl) {
+         $("#selProv").html(htmlOutput);
+         if (ccaaData.length <= 1) {
+
+          console.log("una provincia");
+          onChangeFunct($("#selProv"));
+         }
+        }
+        else if (urlService === muniUrl) {
+         $("#selMuni").html(htmlOutput);
+        }
+        
+      });
+    }
+
+
+  });
 </script>
 </body>
 </html>
