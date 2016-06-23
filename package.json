@@ -1,0 +1,26 @@
+{
+  "name": "geoporra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esri-es/geoporra.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esri-es/geoporra/issues"
+  },
+  "homepage": "https://github.com/esri-es/geoporra#readme",
+  "dependencies": {
+    "arc-node": "^0.3.0",
+    "node-promise": "^0.5.12",
+    "qs": "^6.2.0",
+    "sqlite3": "^3.1.4"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  
+  "username": "",
+  "password": "",
+  "account_id": "NXX5E4XxvpeLGtBE",
+  "root_url": "www.arcgis.com",
+  "services_url": "services6.arcgis.com",
+  "port": 443,
+  "arcgisPath": "",
+  "portalPath": "",
+  "allowSelfSigned": false,
+  "feature_service": "https://services6.arcgis.com/NXX5E4XxvpeLGtBE/ArcGIS/rest/services/Votos/FeatureServer/4"
+}
