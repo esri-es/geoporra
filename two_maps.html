@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>GeoPorra 26J</title>
+<style>
+  html, body, #viewDiv {
+    
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 50%;
+    position: fixed;
+  
+    margin-top: 0;
+  }
+  #viewDivCanarias {
+    position: absolute;
+    width: 350px;
+    height: 200px;
+    bottom: 16px;
+    border-top: 5px solid rgba(255, 255, 255, 0.65);
+    border-right: 5px solid rgba(255, 255, 255, 0.65);
+    transition: all 250ms ease;
+  }
+
+  #viewDivCanarias2 {
+    position: absolute;
+    width: 350px;
+    height: 200px;
+    bottom: 16px;
+    border-top: 5px solid rgba(255, 255, 255, 0.65);
+    border-left: 5px solid rgba(255, 255, 255, 0.65);
+    transition: all 250ms ease;
+  }
+
+  #viewDivRight {
+    
+    padding: 0;
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 9999;
+    margin-left: 50%;
+/*    float: left;
+*/  }
+
+  #canariasDiv.hide {
+        transform: translate(-416px);
+  }
+
+  #modalBtn {
+    position: absolute;
+    z-index: 2;
+    left: 60px;
+    top: 20px;
+  }
+
+  .separator {
+    height: 100%;
+    width: 4px;
+    background-color: #6c6c6c;
+    z-index: 999999;
+    position: absolute;
+    left: 50%;
+    margin-left: 50%;
+  }
+
+  .logoPartido{
+    height: 60px;
+    width: 60px;
+  }
+
+  .right {
+    margin-left: 100%;
+  }
+
+  .left, .right {
+    width: 50%;
+    position: absolute;
+    z-index: 99999999;
+    background-color: rgba(255,255,255,.6);
+    text-align: center;
+    padding: .5rem 0;
+    margin-top: 0;
+    font-weight: 300;
+  }
+
+</style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.0/esri/css/main.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>  
+
+
+<!-- ************************ ArcGIS Libraries ************************ -->
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.0/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.0/"></script>
+
+<!-- ************************************************ -->
+
+
+<!-- ***********BOOTSTRAP LIBRARIES******************* -->
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<!-- **************************************** -->
+<script>
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "dojo/domReady!"
+], function(Map, MapView){
+
+  var map = new Map({
+    basemap: "dark-gray"
+  });
+  var peninsula_view = new MapView({
+    container: "viewDiv",
+    map: map,
+    zoom: 5,
+    center: [-3,40] 
+  });
+  var canarias_view = new MapView({
+    map: map,
+    container: 'viewDivCanarias',
+    center: [-16.074882 , 28.314658],
+    rotation: 0,
+    zoom: 5,
+  });
+
+  var map2 = new Map({
+    basemap: "dark-gray"
+  });
+  var peninsula_view2 = new MapView({
+    container: "viewDivRight",
+    map: map2,
+    zoom: 5,
+    center: [-3,40] 
+  });
+  var canarias_view2 = new MapView({
+    map: map2,
+    container: 'viewDivCanarias2',
+    center: [-16.074882 , 28.314658],
+    rotation: 0,
+    zoom: 5,
+  });
+
+  peninsula_view.watch("zoom", function(value, oldValue) {
+    if(value <= 5){
+      canarias_view.container.classList.add("hide");
+    }else{
+      canarias_view.container.classList.remove("hide");
+    }
+  });  
+ 
+
+});
+</script>
+</head>
+<body>
+  <h1 class="left">¿Quién quieres que gane?</h1>
+  <div id="viewDiv">    
+    <div id="viewDivCanarias" class="view"></div> 
+  </div>
+    <div class="separator"></div>
+  <h1 class="right">¿Quién crees que va a ganar?</h1>
+  <div id="viewDivRight">
+    <div id="viewDivCanarias2" ></div>
+  </div>
+  
+   
+</body>
+</html>
