@@ -24,16 +24,15 @@
 
 </style>
 
-<link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
 
 <script src="assets/js/jsrender.js"></script>
 
 <!-- ************************ ArcGIS Libraries ************************ -->
-
-<link rel="stylesheet" href="//js.arcgis.com/4.0/esri/css/main.css">
-<script src="//js.arcgis.com/4.0/"></script>
+<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
+<script src="https://js.arcgis.com/3.16/"></script>
 
 <!-- ************************************************ -->
 
@@ -71,40 +70,52 @@
           </div>
           <div class="modal-body">
             <h4>¿Quien quieres que gane?</h4>
-            <label>
-              <input type="radio" name="wantToWin" value="pp" />
-              <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
-            </label>
-            <label>
-              <input type="radio" name="wantToWin" value="psoe" />
-              <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
-            </label>
-            <label>
-              <input type="radio" name="wantToWin" value="podemos" />
-              <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
-            </label>
-            <label>
-              <input type="radio" name="wantToWin" value="ciudadanos" />
-              <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
-            </label>
+            <div id="wantToWinID" >
+              <label>
+                <input type="radio" name="wantToWin" value="pp" class="wantToWinClass" />
+                <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
+              </label>
+              <label>
+                <input type="radio" name="wantToWin" value="psoe" class="wantToWinClass" />
+                <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
+              </label>
+              <label>
+                <input type="radio" name="wantToWin" value="podemos" class="wantToWinClass"/>
+                <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
+              </label>
+              <label>
+                <input type="radio" name="wantToWin" value="ciudadanos" class="wantToWinClass"/>
+                <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
+              </label>
+              <label>
+                <input type="radio" name="wantToWin" value="otros" class="wantToWinClass"/>
+                <img src="assets/images/otros.jpg" class="logoPartido img-rounded" alt="otros">
+              </label>
+            </div>
             <hr>
             <h4>¿Quien crees que va a ganar?</h4>
-            <label>
-              <input type="radio" name="thinkToWin" value="pp" />
-              <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
-            </label>
-            <label>
-              <input type="radio" name="thinkToWin" value="psoe" />
-              <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
-            </label>
-            <label>
-              <input type="radio" name="thinkToWin" value="podemos" />
-              <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
-            </label>
-            <label>
-              <input type="radio" name="thinkToWin" value="ciudadanos" />
-              <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
-            </label>
+            <div id="thinkToWinID" >
+              <label>
+                <input type="radio" name="thinkToWin" value="pp" class="thinkToWinClass" />
+                <img src="assets/images/pp.png" class="logoPartido img-rounded" alt="PP">
+              </label>
+              <label>
+                <input type="radio" name="thinkToWin" value="psoe" class="thinkToWinClass" />
+                <img src="assets/images/psoe.jpg" class="logoPartido img-rounded" alt="PSOE">
+              </label>
+              <label>
+                <input type="radio" name="thinkToWin" value="podemos" class="thinkToWinClass" />
+                <img src="assets/images/podemos.png" class="logoPartido img-rounded" alt="Unidos Podemos">
+              </label>
+              <label>
+                <input type="radio" name="thinkToWin" value="ciudadanos" class="thinkToWinClass"/>
+                <img src="assets/images/ciudadanos.jpg" class="logoPartido img-rounded" alt="Ciudadanos">
+              </label>
+              <label>
+                <input type="radio" name="thinkToWin" value="otros" class="wantToWinClass"/>
+                <img src="assets/images/otros.jpg" class="logoPartido img-rounded" alt="otros">
+              </label>
+            </div>
             <hr>
             <div class="form-group">
               <label for="selCCAA">Seleccione Comunidad Autónoma:</label>
@@ -150,27 +161,35 @@
 
 <script>
   require([
-    "esri/Map",
-    "esri/views/MapView",
+    "esri/map",
     "esri/tasks/QueryTask",
-    "esri/tasks/support/Query",
+    "esri/tasks/query",
+    "esri/layers/FeatureLayer",
+    "esri/graphic",
     "dojo/domReady!"
-  ], function(Map, MapView,QueryTask,Query){
-    var map = new Map({
-      basemap: "gray"
+  ], function(Map,
+       QueryTask,
+       Query,
+       FeatureLayer,
+       Graphic){
+
+
+
+    var ccaaUrl = "HTTPS://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/2";
+    var provUrl = "HTTPS://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/4";
+    var muniUrl = "HTTPS://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/3";
+    var votosUrl = "https://services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/Votos/FeatureServer/4";
+
+    map = new Map("viewDiv", {
+      basemap: "topo",
+      center: [-3, 40], 
+      zoom: 6
     });
-    var view = new MapView({
-      container: "viewDiv",
-      map: map,
-      zoom: 6,
-      center: [-3,40] 
-    });
 
+    var featureLayer = new FeatureLayer(votosUrl);
 
+    
 
-    var ccaaUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/2";
-    var provUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/4";
-    var muniUrl = "//services6.arcgis.com/NXX5E4XxvpeLGtBE/arcgis/rest/services/LimitesAdministrativos/FeatureServer/3";
     
     //Cast te function once to render CCAA
     queryAndRenderize("1=1",["Nombre", "Cod_CCAA"],ccaaUrl);
@@ -185,8 +204,48 @@
       var codCCAA = $('#selCCAA').val();
       var codProv = $('#selProv').val();
       var codMuni = $('#selMuni').val();
+      var wantToWin = $('.wantToWinClass:checked').val();
+      var thinkToWin = $('.thinkToWinClass:checked').val();
+      var Navegador = window.navigator.appVersion;
+      var timeStamp = Date.now();
+      var iP;
+      $.getJSON("http://jsonip.com/?callback=?", function (data) {
+        iP = data.ip;
+        var attr = {
+          "IP":iP,
+          "Cod_mun":codMuni,
+          "Navegador": Navegador,
+          "Timestamp_": timeStamp,
+          "Cod_prov": codProv ,
+          "Cod_ccaa": codCCAA
+        };
+        if (wantToWin === "pp") {
+          attr.PP_quiere = 1;
+        } else if (wantToWin === "psoe") {
+          attr.PSOE_quiere = 1;
+        } else if (wantToWin === "podemos") {
+          attr.UNIDOSPODEMOS_quiere = 1;
+        } else if (wantToWin === "ciudadanos") {
+          attr.CIUDADANOS_quiere = 1;
+        } else if (wantToWin === "otros") {
+          attr.OTRO_quiere = 1;
+        }
 
 
+        if (thinkToWin === "pp") {
+          attr.PP_cree = 1;
+        } else if (thinkToWin === "psoe") {
+          attr.PSOE_cree = 1;
+        } else if (thinkToWin === "podemos") {
+          attr.UNIDOSPODEMOS_cree = 1;
+        } else if (thinkToWin === "ciudadanos") {
+          attr.CIUDADANOS_cree = 1;
+        } else if (thinkToWin === "otros") {
+          attr.OTRO_cree = 1;
+        }  
+        var targetGraphic = new Graphic({attributes: attr});
+        featureLayer.applyEdits([targetGraphic]);
+      });
     });
 
     function onChangeFunct(esto){
@@ -206,10 +265,10 @@
 
     function queryAndRenderize(where,outFieldsArray,urlService){
       var query = new Query();
-      query.where =where;
+      query.where = where;
       query.outFields = outFieldsArray;
       var queryTask = new QueryTask(urlService);
-      queryTask.execute(query).then(function(result){
+      queryTask.execute(query,function(result){
         var ccaaData = result.features;
         var template = $.templates("#theTmpl");
         var htmlOutput = template.render(ccaaData);
